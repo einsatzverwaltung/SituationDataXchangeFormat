@@ -1,8 +1,9 @@
+
 # Lagekarte JSON
 Lagekarte JSON ist eine Konvention, basierend auf dem GeoJSON Schema ([RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946)) zum Austausch von georeferenzierten Lagekarten im Kontext der Behörden und Organisationen mit Sicherheitsaufgaben. Bei der Definition wurde auf eine größtmögliche Kompatibilität zu vorhandenen Standards geachtet und die Empfehlung der [DV 102](https://www.kritis.bund.de/SharedDocs/Downloads/BBK/DE/Publikationen/Broschueren_Flyer/Empfehlungen_Takt_Zeichen_im_BevSch.pdf?__blob=publicationFile) des Bundesamtes für Bevölkerungs- und Katastrophenschutz beachtet.
 ## Initatoren und Unterstützer
 Initiiert wurde dieses Projekt von [REV Plus](https://www.einsatzverwaltung.de/) und [RescueTablet](https://rescuetablet.de/).
-## Geometrische Elemente des geoJSON Standards
+## Geometrische Elemente des geoJSON Standards (RFC7946)
 | Element | Beschreibung |
 |--|--|
 | Position| Basiselement mit Latitude und Longitude im WGS84 Koordinatensystem|
@@ -42,7 +43,24 @@ Ein Polygon ist eine geschlossene Linie, die aus mindestens drei Positionen best
 	    ]
     }
 ## Erweiterung der Standardobjekte
-Die Standardelemente LineString und Polygon werden erweitert durch entsprechende Properties für die farbliche Gestaltung.
+### Circle / Kreis
+Die Standardelemente bilden leider nicht alle Möglichkeiten ab. Was aktuell noch fehlt, sind Kreise. Als Konvention wird derzeit von den meisten Client-Bibliotheken ein Point mit Radius verwendet.
+Sobald ein Point mit Radius versehen ist, soll dieser als Circle gerendert werden. Der Radius wird in Metern angegeben.
+Beispiel:
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [102.0, 0.5]
+      },
+      "properties": {
+        "radius": 100
+      }
+    }
+
+### Properties
+Die Standardelemente werden durch entsprechende Properties für die farbliche Gestaltung erweitert. Dies gilt für fast alle Elemente der geoJSON Spezifikation.
 |Property| Beschreibung | Beispiel | Point | LineString | Polygon |
 |--|--|--|--|--|--|
 | stroke | HTML Farbe für den Strich | #FF00FF | Nein | Ja | Ja |
@@ -110,12 +128,16 @@ Element| Basiert auf | Beschreibung |
 | Point of Interest | Point | Darstellung eines Bilds / Icon|
 | Taktisches Zeichen | Point of Interest | Darstellung eines taktischen Zeichens |
 | Gebiet | Polygon | Darstellung eines Gebietes |
+
+Properties können Mandatory, Optional oder Conditional sein. Mandatory-Properties müssen immer gesetzt sein. Optional-Properties sind optional und können bei Bedarf gesetzt werden.
+Conditional-Properties sind in bestimmten Fällen Mandatory. Es hängt also von anderen Properties ab, ob die Conditional-Property übermittelt werden muss. 
+
 ### Point of Interest
 Dieses Element ist für die grundsätzliche Darstellung eines Bildes ohne weitere fachliche Definition zu verwenden. Hiermit können Beispielsweise besondere Punkte markiert werden.
 
 |Property| Beschreibung | M/C/O | Fester Wert |
 |--|--|--|--|
-| lage:type | Typ des Lageelementes | M | POI
+| lage:typ | Typ des Lageelementes | M | poi
 | lage:name | Name des POI, wird auf Lagekarte dargestellt | O | 
 | lage:description | Beschreibung des POI (Beispielsweise für Popup) | O |
 | lage:url | URL zum Bild | M |
@@ -128,7 +150,7 @@ Beispiel:
         "coordinates": [102.0, 0.5]
       },
       "properties": {
-        "lage:type": "POI",
+        "lage:typ": "poi",
         "lage:name" : "Toiletten",
         "lage:description" : "Tolietten mit Handwaschmöglichkeit",
         "lage:url": "https://cdn-icons-png.flaticon.com/512/185/185547.png"
@@ -141,7 +163,7 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
 
 |Property| Beschreibung | M/C/O | Fester Wert |
 |--|--|--|--|
-| lage:type | Typ des Lageelementes | M | TZ
+| lage:typ | Typ des Lageelementes | M | tz
 | lage:tz:grundzeichen | Grundzeichen des taktischen Zeichens | M | 
 | lage:tz:fachaufgabe | Fachaufgabe des taktischen Zeichens | M | 
 | lage:tz:formation | Art der taktischen Formation, immer notwendig, wenn für das Grundzeichen die taktische Formation gewählt wurde | C |
@@ -157,7 +179,7 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
         "coordinates": [102.0, 0.5]
       },
       "properties": {
-        "lage:type": "TZ",
+        "lage:typ": "tz",
         "lage:tz_grundzeichen" : "Taktische Formation",
         "lage:tz:fachaufgabe" : "Brandbekaempfung ",
         "lage:tz:formation" : "KraftfahrzeugMehrspurig",
