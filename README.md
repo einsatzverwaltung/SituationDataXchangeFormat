@@ -50,7 +50,45 @@ Die Standardelemente LineString und Polygon werden erweitert durch entsprechende
 | stroke-opacity | Strich-Deckkraft in Prozent (0.0 - 1.0) | 1 | Nein | Ja | Ja |
 | fill | HTML Füllfarbe | #00FF00 | Nein | Nein | Ja |
 | fill-opacity | Deckkraft der Füllfarbe in Prozent | 0.5 | Nein | Nein | Ja |
+Hier ein Beispiel eines farbigen Rechtecks:
 
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#ff0000",
+        "stroke-width": 2,
+        "stroke-opacity": 1,
+        "fill": "#555555",
+        "fill-opacity": 0.5
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              8.908538818359375,
+              50.20986732327653
+            ],
+            [
+              8.97857666015625,
+              50.20986732327653
+            ],
+            [
+              8.97857666015625,
+              50.22744158978946
+            ],
+            [
+              8.908538818359375,
+              50.22744158978946
+            ],
+            [
+              8.908538818359375,
+              50.20986732327653
+            ]
+          ]
+        ]
+      }
+    }
 
 ## Lagekartenelemente
 Zur Darstellung der Lagekarte ist es notwendig unterschiedliche Elemente darstellen zu können. Diese basieren auf den obigen geometrischen Elementen des geoJSON Standards. Über die Property-Eigenschaft ist es möglich weitere Attribute zu einem geometrischen Element (Geometry) hinzuzufügen.
@@ -81,6 +119,22 @@ Dieses Element ist für die grundsätzliche Darstellung eines Bildes ohne weiter
 | lage:name | Name des POI, wird auf Lagekarte dargestellt | O | 
 | lage:description | Beschreibung des POI (Beispielsweise für Popup) | O |
 | lage:url | URL zum Bild | M |
+Beispiel:
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [102.0, 0.5]
+      },
+      "properties": {
+        "lage:type": "POI",
+        "lage:name" : "Toiletten",
+        "lage:description" : "Tolietten mit Handwaschmöglichkeit",
+        "lage:url": "https://cdn-icons-png.flaticon.com/512/185/185547.png"
+      }
+    }
+
 ### Taktisches Zeichen
 Dieses Element wird für die Darstellung von taktischen Zeichen verwendet. Durch die fachlichen Informationen kann das anzeigende System die taktischen Zeichen selbstständig generieren oder für die Erzeugung von Übersichten oder anderen Informationen verwenden.
 Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist dabei immer anzugeben.
@@ -95,6 +149,24 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
 | lage:tz:ordnung | Ordnung bzw. Stärke der Einheit | O |
 | lage:tz:personalfunktion | Besondere Funktion einer Person, kann nur für das Grundzeichen Person angegeben werden | O |
 | lage:tz:ortsfest | Gibt an, ob das taktische Zeichen Ortsfest ist | O | true/false
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [102.0, 0.5]
+      },
+      "properties": {
+        "lage:type": "TZ",
+        "lage:tz_grundzeichen" : "Taktische Formation",
+        "lage:tz:fachaufgabe" : "Brandbekaempfung ",
+        "lage:tz:formation" : "KraftfahrzeugMehrspurig",
+        "lage:tz:organisation" : "Feuerwehr",
+        "lage:name" : "MTL 1-46-1",
+        "lage:description" : "LF 20 Maintal",
+        "lage:url" : "https://rev.fwmtl.de/elp/api/tz-generator?typ=Brandbekaempfung&zeichen=Einheit&organisation=Feuerwehr&einheit=KraftfahrzeugMehrspurig"
+      }
+    }
 
 #### lage:tz:grundzeichen
 Entspricht dem Punkt 1. Grundzeichen der DV102. Mögliche Werte:
