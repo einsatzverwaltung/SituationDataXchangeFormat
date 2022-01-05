@@ -60,7 +60,7 @@ Beispiel:
       }
     }
 
-### Properties
+### Styling Properties
 Die Standardelemente werden durch entsprechende Properties für die farbliche Gestaltung erweitert. Dies gilt für fast alle Elemente der geoJSON Spezifikation.
 |Property| Beschreibung | Beispiel | Point | LineString | Polygon |
 |--|--|--|--|--|--|
@@ -69,6 +69,7 @@ Die Standardelemente werden durch entsprechende Properties für die farbliche Ge
 | stroke-opacity | Strich-Deckkraft in Prozent (0.0 - 1.0) | 1 | Nein | Ja | Ja |
 | fill | HTML Füllfarbe | #00FF00 | Nein | Nein | Ja |
 | fill-opacity | Deckkraft der Füllfarbe in Prozent | 0.5 | Nein | Nein | Ja |
+
 Hier ein Beispiel eines farbigen Rechtecks:
 
     {
@@ -111,21 +112,21 @@ Hier ein Beispiel eines farbigen Rechtecks:
 
 ## Übersicht über alle Attribute
 
-Attribut| Point | LineString | Polygon | Circle | [TZ](#Taktisches-Zeichen) | 
+Attribut| [Point](#point-punkt) | [LineString](#line-string-linie) | [Polygon](#polygon) | [Circle](#circle--kreis) | [TZ](#Taktisches-Zeichen) | 
 |--|--|--|--|--|--|
-| stroke          | - | O | O | O | - |
-| stroke-width    | - | O | O | O | - |
-| stroke-opacity  | - | O | O | O | - |
-| fill            | - | - | O | O | - |
-| fill-opacity    | - | - | O | O | - |
-| radius          | - | - | - | M | - |
-| lage:typ        | O | O | O | O | M |
-| lage:tz:grundzeichen  | - | - | - | - | C |
-| lage:tz:fachaufgabe   | - | - | - | - | M |
-| lage:tz:formation     | - | - | - | - | C |
-| lage:tz:organisation  | - | - | - | - | O |
-| lage:tz:ordnung       | - | - | - | - | O |
-| lage:tz:personalfunktion | - | - | - | - | O |
+| [stroke](#styling-properties)          | - | O | O | O | - |
+| [stroke-width](#styling-properties)    | - | O | O | O | - |
+| [stroke-opacity](#styling-properties)  | - | O | O | O | - |
+| [fill](#styling-properties)            | - | - | O | O | - |
+| [fill-opacity](#styling-properties)    | - | - | O | O | - |
+| [radius](#circle--kreis)         | - | - | - | M | - |
+| [lage:typ](#lage:typ)        | O | O | O | O | M |
+| [lage:tz:grundzeichen](#lage:tz:grundzeichen)  | - | - | - | - | C |
+| [lage:tz:fachaufgabe](#lage:tz:fachaufgabe)   | - | - | - | - | M |
+| [lage:tz:formation](#lage:tz:formation)     | - | - | - | - | C |
+| [lage:tz:organisation](#lage:tz:organisation)  | - | - | - | - | O |
+| [lage:tz:ordnung](#lage:tz:ordnung)       | - | - | - | - | O |
+| [lage:tz:personalfunktion](#lage:tz:personalfunktion) | - | - | - | - | O |
 | [lage:tz:ortsfest](#lage:tz:ortsfest)      | - | - | - | - | O |
 
 ## Lagekartenelemente
@@ -161,6 +162,7 @@ Dieses Element ist für die grundsätzliche Darstellung eines Bildes ohne weiter
 | lage:name | Name des POI, wird auf Lagekarte dargestellt | O | 
 | lage:description | Beschreibung des POI (Beispielsweise für Popup) | O |
 | lage:url | URL zum Bild | M |
+
 Beispiel:
 
     {
