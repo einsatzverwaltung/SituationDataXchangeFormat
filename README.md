@@ -111,7 +111,7 @@ Hier ein Beispiel eines farbigen Rechtecks:
 
 ## Übersicht über alle Attribute
 
-Attribut| Point | LineString | Polygon | Circle | [TZ](###Taktisches-Zeichen) | 
+Attribut| Point | LineString | Polygon | Circle | [TZ](#Taktisches-Zeichen) | 
 |--|--|--|--|--|--|
 | stroke          | - | O | O | O | - |
 | stroke-width    | - | O | O | O | - |
@@ -126,7 +126,7 @@ Attribut| Point | LineString | Polygon | Circle | [TZ](###Taktisches-Zeichen) |
 | lage:tz:organisation  | - | - | - | - | O |
 | lage:tz:ordnung       | - | - | - | - | O |
 | lage:tz:personalfunktion | - | - | - | - | O |
-| [lage:tz:ortsfest](####lage:tz:ortsfest)      | - | - | - | - | O |
+| [lage:tz:ortsfest](#lage:tz:ortsfest)      | - | - | - | - | O |
 
 ## Lagekartenelemente
 Zur Darstellung der Lagekarte ist es notwendig unterschiedliche Elemente darstellen zu können. Diese basieren auf den obigen geometrischen Elementen des geoJSON Standards. Über die Property-Eigenschaft ist es möglich weitere Attribute zu einem geometrischen Element (Geometry) hinzuzufügen.
