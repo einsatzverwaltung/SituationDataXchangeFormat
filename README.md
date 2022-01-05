@@ -43,6 +43,7 @@ Ein Polygon ist eine geschlossene Linie, die aus mindestens drei Positionen best
 	    ]
     }
 ## Erweiterung der Standardobjekte
+
 ### Circle / Kreis
 Die Standardelemente bilden leider nicht alle Möglichkeiten ab. Was aktuell noch fehlt, sind Kreise. Als Konvention wird derzeit von den meisten Client-Bibliotheken ein Point mit Radius verwendet.
 Sobald ein Point mit Radius versehen ist, soll dieser als Circle gerendert werden. Der Radius wird in Metern angegeben.
@@ -107,6 +108,25 @@ Hier ein Beispiel eines farbigen Rechtecks:
         ]
       }
     }
+
+## Übersicht über alle Attribute
+
+Attribut| Point | LineString | Polygon | Circle | [TZ](###Taktisches-Zeichen) | 
+|--|--|--|--|--|--|
+| stroke          | - | O | O | O | - |
+| stroke-width    | - | O | O | O | - |
+| stroke-opacity  | - | O | O | O | - |
+| fill            | - | - | O | O | - |
+| fill-opacity    | - | - | O | O | - |
+| radius          | - | - | - | M | - |
+| lage:typ        | O | O | O | O | M |
+| lage:tz:grundzeichen  | - | - | - | - | C |
+| lage:tz:fachaufgabe   | - | - | - | - | M |
+| lage:tz:formation     | - | - | - | - | C |
+| lage:tz:organisation  | - | - | - | - | O |
+| lage:tz:ordnung       | - | - | - | - | O |
+| lage:tz:personalfunktion | - | - | - | - | O |
+| [lage:tz:ortsfest](####lage:tz:ortsfest)      | - | - | - | - | O |
 
 ## Lagekartenelemente
 Zur Darstellung der Lagekarte ist es notwendig unterschiedliche Elemente darstellen zu können. Diese basieren auf den obigen geometrischen Elementen des geoJSON Standards. Über die Property-Eigenschaft ist es möglich weitere Attribute zu einem geometrischen Element (Geometry) hinzuzufügen.
@@ -194,7 +214,7 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
 Entspricht dem Punkt 1. Grundzeichen der DV102. Mögliche Werte:
 
  - Ohne
- - Taktische Formation
+ - Einheit
  - Befehlsstelle
  - Stelle
  - Person
@@ -327,3 +347,12 @@ Entspricht dem Punkt 3. Zeichen zur Darstellung von Fachaufgaben der Gefahrenabw
  - Brauchwasser 
  - VersorgungBetriebsstoffe 
  - Geraete 
+
+ #### lage:tz:ortsfest
+
+ Gibt an ob das Zeichen mit der Kennzeichnung Ortsfest dargestellt werden soll.
+
+ Mögliche Werte
+ - true oder 1
+ - false oder 0
+ - Wenn null, dann Default (false)
