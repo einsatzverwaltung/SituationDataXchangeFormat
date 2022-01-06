@@ -61,7 +61,7 @@ Beispiel:
     }
 
 ### Styling Properties
-Die Standardelemente werden durch entsprechende Properties für die farbliche Gestaltung erweitert. Dies gilt für fast alle Elemente der geoJSON Spezifikation.
+Die Standardelemente werden durch entsprechende Properties für die farbliche Gestaltung erweitert. Dies gilt für fast alle Elemente der geoJSON Spezifikation. Die meisten dieser Properties werden auch durch geoJSON Viewer unterstützt. Somit wäre ein Anzeigen der farbigen Elemente auch in anderen Programmen möglich.
 |Property| Beschreibung | Beispiel | Point | LineString | Polygon |
 |--|--|--|--|--|--|
 | stroke | HTML Farbe für den Strich | #FF00FF | Nein | Ja | Ja |
@@ -128,6 +128,11 @@ Attribut| [Point](#point-punkt) | [LineString](#line-string-linie) | [Polygon](#
 | [lage:tz:ordnung](#lage:tz:ordnung)       | - | - | - | - | O |
 | [lage:tz:personalfunktion](#lage:tz:personalfunktion) | - | - | - | - | O |
 | [lage:tz:ortsfest](#lage:tz:ortsfest)      | - | - | - | - | O |
+| [lage:tz:text](#lage:tz:text)      | - | - | - | - | C |
+| [lage:bereich:art](#lage:bereich:art)         | - | - | O | O | - |
+| [lage:bereich:gefahr](#lage:bereich:gefahr)   | - | - | O | O | - |
+| [lage:name](#lage:name)   | O | O | O | O | O |
+| [lage:beschreibung](#lage:beschreibung)   | O | O | O | O | O |
 
 ## Lagekartenelemente
 Zur Darstellung der Lagekarte ist es notwendig unterschiedliche Elemente darstellen zu können. Diese basieren auf den obigen geometrischen Elementen des geoJSON Standards. Über die Property-Eigenschaft ist es möglich weitere Attribute zu einem geometrischen Element (Geometry) hinzuzufügen.
@@ -187,7 +192,8 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
 |--|--|--|--|
 | lage:typ | Typ des Lageelementes | M | tz
 | lage:tz:grundzeichen | Grundzeichen des taktischen Zeichens | M | 
-| lage:tz:fachaufgabe | Fachaufgabe des taktischen Zeichens | M | 
+| lage:tz:fachaufgabe | Fachaufgabe des taktischen Zeichens. Sollte immer gesetzt sein, wenn kein Text gesetzt ist. | C | 
+| lage:tz:text | Textdarstellung anstelle einer Fachaufgabe. Soll nur gesetzt sein, wenn keine Fachaufgabe gewählt wurde. | C | 
 | lage:tz:formation | Art der taktischen Formation, immer notwendig, wenn für das Grundzeichen die taktische Formation gewählt wurde | C |
 | lage:tz:organisation | Organisation der Einheit | O |
 | lage:tz:ordnung | Ordnung bzw. Stärke der Einheit | O |
@@ -358,3 +364,74 @@ Entspricht dem Punkt 3. Zeichen zur Darstellung von Fachaufgaben der Gefahrenabw
  - true oder 1
  - false oder 0
  - Wenn null, dann Default (false)
+
+#### lage:tz:text
+
+Alternativ zu einer Fachaufgabe kann auch ein Text in das Zeichen generiert werden. Dies ist z.B. bei der Generierung von Fahrzeugen des THW sinnvoll.
+
+## Bereiche
+
+Für die Darstellung von Bereichen werden i.d.R. Polygone oder Kreise verwendet. Für die Darstellung beschreibt die Empfehlung zur Darstellung von taktischen Zeichen folgende Gebietsarten:
+
+|Gebiet| Hintergrundfarbe | Rahmenfarbe |
+|--|--|--|
+| Allgemeine Fläche | Transparent | Nicht festgelegt |
+| Flächenbrand | Rot | Nicht festgelegt |
+| Überschwemmtes Gebiet | Blau | Nicht festgelegt |
+| Dürregebiet | Braun | Nicht festgelegt |
+| Einschränkung oder Ausfall der Versorgung | Violett | Nicht festgelegt |
+| Sonstiges Schadensgebiet | Orange | Nicht festgelegt |
+| Kontaminiertes Gebiet | Gelb | Nicht festgelegt |
+| KatS Alarm | Transparent | Rot |
+| Einsatzraum | Transparent | Schwarz mit Beschriftung |
+
+Zusätzlich ist das Muster der Hintergrundfarbe für verschiedene Zustände definiert:
+
+|Gefahrenart | Muster |
+|--|--|
+| Vorhandene Gefahr | Vollflächig |
+| Drohende Gefahr | Gestreift 45° Winkel |
+| Noch oder ehemalsbetroffenes Gebiet | Horizontal gestreift |
+
+Zur Darstellung von Gebieten werden folgende Properties verwendet:
+
+|Property| Beschreibung | M/C/O | Fester Wert |
+|--|--|--|--|
+| lage:typ | Typ des Lageelementes | M | bereich
+| lage:bereich:art | Art des Bereichs | M | 
+| lage:bereich:gefahr | Gibt an ob die Gefahr Drohend oder Ehemals ist | O | 
+| lage:name | Name oder Bezeichnung des Gebietes | O | 
+
+Zusätzlich zu den fachlichen Properties sollten auch alle [Styling Properties](#styling-properties) gesetzt werden um eine größtmögliche Kompatibilität zu gewährleisten.
+
+### lage:bereich:art
+
+Beschreibt die Art des Bereichs
+
+ Mögliche Werte
+ - Allgemein
+ - Flächenbrand
+ - Überschwemmung
+ - Dürre
+ - Versorgungsausfall
+ - Sonstiges
+ - Kontaminiert
+ - KatsAlarm
+ - Einsatzraum
+
+### lage:bereich:gefahr
+
+Beschreibt das Vorhandenseins der Gefahr für einen Bereich
+
+ Mögliche Werte
+ - Akut
+ - Drohend
+ - Ehemalig
+
+## lage:name
+
+Diese Eigenschaft gibt dem Objekt einen Namen. Dieser Name bezeichnet das Objekt und sollte immer in der Lagekarte dargestellt werden.
+
+## lage:beschreibung
+
+Diese Eigenschaft beschreibt das Objekt und sollte in der Lagekarte z.B. als Tooltip dargestellt werden.
