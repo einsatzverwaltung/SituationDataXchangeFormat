@@ -166,7 +166,7 @@ Dieses Element ist für die grundsätzliche Darstellung eines Bildes ohne weiter
 | lage:typ | Typ des Lageelementes | M | poi
 | lage:name | Name des POI, wird auf Lagekarte dargestellt | O | 
 | lage:description | Beschreibung des POI (Beispielsweise für Popup) | O |
-| lage:url | URL zum Bild | M |
+| lage:imageUrl | URL zum Bild | M |
 
 Beispiel:
 
