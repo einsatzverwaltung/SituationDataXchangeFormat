@@ -221,7 +221,6 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
 #### lage:tz:grundzeichen
 Entspricht dem Punkt 1. Grundzeichen der DV102. Mögliche Werte:
 
- - Ohne
  - Einheit
  - Befehlsstelle
  - Stelle
@@ -284,7 +283,6 @@ Entspricht dem Punkt 4. Zeichen zur Darstellung von Größenordnungen, hierarchi
 #### lage:tz:personalfunktion
 Entspricht dem Punkt 5. Zeichen zur Darstellung von Personen mit besonderen Funktionen der DV102. Mögliche Werte:
 
- - Keine
  - Fuehrungskraft
  - Sonderfunktion
 
@@ -375,7 +373,7 @@ Für die Darstellung von Bereichen werden i.d.R. Polygone oder Kreise verwendet.
 
 |Gebiet| Hintergrundfarbe | Rahmenfarbe |
 |--|--|--|
-| Allgemeine Fläche | Transparent | Nicht festgelegt |
+| Allgemeine Fläche | Transparent | Schwarz |
 | Flächenbrand | Rot | Nicht festgelegt |
 | Überschwemmtes Gebiet | Blau | Nicht festgelegt |
 | Dürregebiet | Braun | Nicht festgelegt |
