@@ -133,8 +133,11 @@ Attribut| [Point](#point-punkt) | [LineString](#line-string-linie) | [Polygon](#
 | [lage:bereich:gefahr](#lage:bereich:gefahr)   | - | - | O | O | - |
 | [lage:name](#lage:name)   | O | O | O | O | O |
 | [lage:beschreibung](#lage:beschreibung)   | O | O | O | O | O |
+| [lage:image:size](#lage:beschreibung)   | O | - | - | - | O |
+| [lage:image:anchor](#lage:beschreibung)   | O | - | - | - | O |
 
 ## Lagekartenelemente
+
 Zur Darstellung der Lagekarte ist es notwendig unterschiedliche Elemente darstellen zu können. Diese basieren auf den obigen geometrischen Elementen des geoJSON Standards. Über die Property-Eigenschaft ist es möglich weitere Attribute zu einem geometrischen Element (Geometry) hinzuzufügen.
 Beispielhaft wird dazu folgend die Definition für einen Punkt mit Metadaten (Attribut "prop0" hat den Wert "value0" dargestellt:
 
@@ -166,7 +169,7 @@ Dieses Element ist für die grundsätzliche Darstellung eines Bildes ohne weiter
 | lage:typ | Typ des Lageelementes | M | poi
 | lage:name | Name des POI, wird auf Lagekarte dargestellt | O | 
 | lage:description | Beschreibung des POI (Beispielsweise für Popup) | O |
-| lage:imageUrl | URL zum Bild | M |
+| lage:imageUrl | URL zum Bild (Kann auch Data-URL sein) | M |
 
 Beispiel:
 
@@ -198,7 +201,6 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
 | lage:tz:organisation | Organisation der Einheit | O |
 | lage:tz:ordnung | Ordnung bzw. Stärke der Einheit | O |
 | lage:tz:personalfunktion | Besondere Funktion einer Person, kann nur für das Grundzeichen Person angegeben werden | O |
-| lage:tz:ortsfest | Gibt an, ob das taktische Zeichen Ortsfest ist | O | true/false
 
     {
       "type": "Feature",
@@ -221,39 +223,31 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
 #### lage:tz:grundzeichen
 Entspricht dem Punkt 1. Grundzeichen der DV102. Mögliche Werte:
 
- - Einheit
- - Befehlsstelle
- - Stelle
- - Person
- - Massnahme
- - Anlass
- - Gefahr
- - Logistik
- - Fuehrungseinheit
- - Logistik
+|Symbol| Wert |
+|--|--|
+| Abrollbehälter, Container | abrollbehaelter |
+| Anhänger | anhaenger |
+| Anlass, Ereignis | anlass |
+| Befehlsstelle | befehlsstelle |
+| Fahrrad | fahrrad |
+| Fahrzeug | fahrzeug |
+| Flugzeug | flugzeug |
+| Gebäude | gebaeude |
+| Gefahr | gefahr |
+| Hubschrauber | hubschrauber |
+| Kettenfahrzeug | kettenfahrzeug |
+| Kraftfahrzeug, landgebunden | kraftfahrzeug-landgebunden |
+| Kraftfahrzeug, geländegängig | kraftfahrzeug-gelaendegaengig |
+| Kraftrad | kraftrad |
+| Maßnahme | massnahme |
+| Person | person |
+| Schienenfahrzeug | schienenfahrzeug |
+| Stelle, Einrichtung | stelle |
+| Stelle, Einrichtung (ortsfest) | ortsfeste-stelle |
+| Taktische Formation | taktische-formation |
+| Wasserfahrzeug | wasserfahrzeug |
+| Wechsellader | wechsellader |
 
-#### lage:tz:formation
-Entspricht dem Punkt 6. Zeichen zur Darstellung von Gegenständen der DV102. Mögliche Werte:
-
- - Einheit
- - Fahrzeug
- - Kraftfahrzeug
- - KraftfahrzeugMehrspurig
- - Wechselladerfahrzeug
- - Abrollbehaelter
- - Anhaenger
- - Schienenfahrzeug
- - Kettenfahrzeug
- - Kraftrad
- - Fahrrad
- - Raeumgeraet
- - Hebegeraet
- - Bagger
- - Bruecke
- - Wasserfahrzeug
- - Flugzeug
- - Hubschrauber
- - 
 #### lage:tz:organisation
 Entspricht dem Punkt 2. Farbgebung zur Darstellung von Organisationen und Einrichtungen der Gefahrenabwehr der DV102. Mögliche Werte:
 
@@ -264,6 +258,7 @@ Entspricht dem Punkt 2. Farbgebung zur Darstellung von Organisationen und Einric
  - Polizei
  - Sonstige
  - Bundeswehr
+
 #### lage:tz:ordnung
 Entspricht dem Punkt 4. Zeichen zur Darstellung von Größenordnungen, hierarchischen Zuordnungen und Ordnungsprinzipien der DV102. Mögliche Werte:
 
@@ -280,6 +275,7 @@ Entspricht dem Punkt 4. Zeichen zur Darstellung von Größenordnungen, hierarchi
  - Land
  - BRD
  - EU
+
 #### lage:tz:personalfunktion
 Entspricht dem Punkt 5. Zeichen zur Darstellung von Personen mit besonderen Funktionen der DV102. Mögliche Werte:
 
@@ -354,15 +350,6 @@ Entspricht dem Punkt 3. Zeichen zur Darstellung von Fachaufgaben der Gefahrenabw
  - VersorgungBetriebsstoffe 
  - Geraete 
 
- #### lage:tz:ortsfest
-
- Gibt an ob das Zeichen mit der Kennzeichnung Ortsfest dargestellt werden soll.
-
- Mögliche Werte
- - true oder 1
- - false oder 0
- - Wenn null, dann Default (false)
-
 #### lage:tz:text
 
 Alternativ zu einer Fachaufgabe kann auch ein Text in das Zeichen generiert werden. Dies ist z.B. bei der Generierung von Fahrzeugen des THW sinnvoll.
@@ -426,10 +413,10 @@ Beschreibt das Vorhandenseins der Gefahr für einen Bereich
  - Drohend
  - Ehemalig
 
-## lage:name
+## Name (lage:name)
 
 Diese Eigenschaft gibt dem Objekt einen Namen. Dieser Name bezeichnet das Objekt und sollte immer in der Lagekarte dargestellt werden.
 
-## lage:beschreibung
+## Beschreibung (lage:beschreibung)
 
 Diese Eigenschaft beschreibt das Objekt und sollte in der Lagekarte z.B. als Tooltip dargestellt werden.
