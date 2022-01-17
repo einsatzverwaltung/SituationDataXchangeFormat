@@ -121,6 +121,8 @@ Attribut| [Point](#point-punkt) | [LineString](#line-string-linie) | [Polygon](#
 | [fill-opacity](#styling-properties)    | - | - | O | O | - |
 | [radius](#circle--kreis)         | - | - | - | M | - |
 | [lage:typ](#lage:typ)        | O | O | O | O | M |
+| [lage:name](#lage:name)   | O | O | O | O | O |
+| [lage:beschreibung](#lage:beschreibung)   | O | O | O | O | O |
 | [lage:tz:grundzeichen](#lage:tz:grundzeichen)  | - | - | - | - | C |
 | [lage:tz:fachaufgabe](#lage:tz:fachaufgabe)   | - | - | - | - | M |
 | [lage:tz:formation](#lage:tz:formation)     | - | - | - | - | C |
@@ -129,12 +131,10 @@ Attribut| [Point](#point-punkt) | [LineString](#line-string-linie) | [Polygon](#
 | [lage:tz:personalfunktion](#lage:tz:personalfunktion) | - | - | - | - | O |
 | [lage:tz:ortsfest](#lage:tz:ortsfest)      | - | - | - | - | O |
 | [lage:tz:text](#lage:tz:text)      | - | - | - | - | C |
+| [lage:image:size](#bildgröße-lage-image-size)   | O | - | - | - | O |
+| [lage:image:anchor](#bildanker-lage-image-anchor)   | O | - | - | - | O |
 | [lage:bereich:art](#lage:bereich:art)         | - | - | O | O | - |
 | [lage:bereich:gefahr](#lage:bereich:gefahr)   | - | - | O | O | - |
-| [lage:name](#lage:name)   | O | O | O | O | O |
-| [lage:beschreibung](#lage:beschreibung)   | O | O | O | O | O |
-| [lage:image:size](#lage:beschreibung)   | O | - | - | - | O |
-| [lage:image:anchor](#lage:beschreibung)   | O | - | - | - | O |
 
 ## Lagekartenelemente
 
@@ -191,16 +191,17 @@ Beispiel:
 Dieses Element wird für die Darstellung von taktischen Zeichen verwendet. Durch die fachlichen Informationen kann das anzeigende System die taktischen Zeichen selbstständig generieren oder für die Erzeugung von Übersichten oder anderen Informationen verwenden.
 Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist dabei immer anzugeben.
 
-|Property| Beschreibung | M/C/O | Fester Wert |
+|Property| Beschreibung | M/C/O | Typ |
 |--|--|--|--|
 | lage:typ | Typ des Lageelementes | M | tz
-| lage:tz:grundzeichen | Grundzeichen des taktischen Zeichens | M | 
-| lage:tz:fachaufgabe | Fachaufgabe des taktischen Zeichens. Sollte immer gesetzt sein, wenn kein Text gesetzt ist. | C | 
-| lage:tz:text | Textdarstellung anstelle einer Fachaufgabe. Soll nur gesetzt sein, wenn keine Fachaufgabe gewählt wurde. | C | 
-| lage:tz:formation | Art der taktischen Formation, immer notwendig, wenn für das Grundzeichen die taktische Formation gewählt wurde | C |
-| lage:tz:organisation | Organisation der Einheit | O |
-| lage:tz:ordnung | Ordnung bzw. Stärke der Einheit | O |
-| lage:tz:personalfunktion | Besondere Funktion einer Person, kann nur für das Grundzeichen Person angegeben werden | O |
+| lage:tz:grundzeichen | Grundzeichen des taktischen Zeichens | M | Enum |
+| lage:tz:fachaufgabe | Fachaufgabe des taktischen Zeichens. Sollte immer gesetzt sein, wenn kein Text gesetzt ist. | C | Enum |
+| lage:tz:text | Textdarstellung anstelle einer Fachaufgabe. Soll nur gesetzt sein, wenn keine Fachaufgabe gewählt wurde. | C | Enum |
+| lage:tz:formation | Art der taktischen Formation, immer notwendig, wenn für das Grundzeichen die taktische Formation gewählt wurde | C | Enum |
+| lage:tz:organisation | Organisation der Einheit | O | Enum |
+| lage:tz:ordnung | Ordnung bzw. Stärke der Einheit | O | Enum |
+| lage:tz:personalfunktion | Besondere Funktion einer Person, kann nur für das Grundzeichen Person angegeben werden | O | Enum |
+| lage:tz:staerke | Stärke der Einheit | O | Objekt |
 
     {
       "type": "Feature",
@@ -350,9 +351,30 @@ Entspricht dem Punkt 3. Zeichen zur Darstellung von Fachaufgaben der Gefahrenabw
  - VersorgungBetriebsstoffe 
  - Geraete 
 
+#### lage:tz:staerke
+Stärke nach FwDV 100 Führer, Unterführer und Mannschaft.
+
+    {
+      "fuehrer": "1",
+      "unterfuehrer": "3",
+      "mannschaft": "18"
+    }
+
 #### lage:tz:text
 
 Alternativ zu einer Fachaufgabe kann auch ein Text in das Zeichen generiert werden. Dies ist z.B. bei der Generierung von Fahrzeugen des THW sinnvoll.
+
+#### Bildgröße (lage:image:size)
+
+Größenangabe des Bildes in Pixeln.
+
+    [10, 20]
+
+#### Bildanker lage:image:anchor
+
+Ankerpunkt des Bildes in Pixeln. An diese Stelle wird das Bild verschoben, um die Koordinate zu markieren. 
+
+    [5, 20]
 
 ## Bereiche
 
