@@ -211,10 +211,11 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
       },
       "properties": {
         "lage:typ": "tz",
-        "lage:tz_grundzeichen" : "Taktische Formation",
-        "lage:tz:fachaufgabe" : "Brandbekaempfung ",
-        "lage:tz:formation" : "KraftfahrzeugMehrspurig",
-        "lage:tz:organisation" : "Feuerwehr",
+        "lage:tz:grundzeichen" : "taktische-formation",
+        "lage:tz:ordnung" : "gruppe",
+        "lage:tz:fachaufgabe" : "brandbekaempfung",
+        "lage:tz:formation" : "kraftfahrzeug-mehrspurig",
+        "lage:tz:organisation" : "feuerwehr",
         "lage:name" : "MTL 1-46-1",
         "lage:description" : "LF 20 Maintal",
         "lage:url" : "https://rev.fwmtl.de/elp/api/tz-generator?typ=Brandbekaempfung&zeichen=Einheit&organisation=Feuerwehr&einheit=KraftfahrzeugMehrspurig"
@@ -252,30 +253,40 @@ Entspricht dem Punkt 1. Grundzeichen der DV102. Mögliche Werte:
 #### lage:tz:organisation
 Entspricht dem Punkt 2. Farbgebung zur Darstellung von Organisationen und Einrichtungen der Gefahrenabwehr der DV102. Mögliche Werte:
 
- - Feuerwehr
- - THW
- - Hilfsorganisationen
- - Fuehrung
- - Polizei
- - Sonstige
- - Bundeswehr
+|Größenordnung| Wert |
+|--|--|
+| Feuerwehr | feuerwehr |
+| Technisches Hilfswerk | thw |
+| Hilfsorganisationen | hilfsorganisationen |
+| Führung | fuehrung |
+| Polizei | polizei |
+| Sonstige Einrichtungen der Gefahrenabwehr  | sonstige |
+| Bundeswehr | bundeswehr |
 
 #### lage:tz:ordnung
-Entspricht dem Punkt 4. Zeichen zur Darstellung von Größenordnungen, hierarchischen Zuordnungen und Ordnungsprinzipien der DV102. Mögliche Werte:
+Entspricht dem Punkt 4.1 und 4.2 Zeichen zur Darstellung von Größenordnungen, hierarchischen Zuordnungen und Ordnungsprinzipien der DV102. Mögliche Werte:
 
- - Trupp
- - Staffel
- - Gruppe
- - Zug
- - Bereitschaft
- - Abteilung
- - Großverband
- - Gemeinde
- - Kreis
- - Bezirk
- - Land
- - BRD
- - EU
+|Größenordnung| Wert |
+|--|--|
+| Trupp | trupp |
+| Staffel | staffel |
+| Gruppe | gruppe |
+| Zug | zug |
+| Bereitschaft (Verband I) | bereitschaft |
+| Abteilung (Verband II)| abteilung |
+| Großverband (Verband III)| grossverband |
+
+#### Verwaltungsstufe (lage:tz:verwaltungsstufe)
+Entspricht dem Punkt 4.3 Verwaltungsstufen der Empfehlung der SKK 2010. Mögliche Werte:
+
+|Verwaltungsstufe| Wert |
+|--|--|
+| Gemeinde, kreisangehörige Stadt | gemeinde |
+| Kreis / Landkreis oder kreisfreie Stadt | kreis |
+| Bezirk | bezirk |
+| Land / Freistaat | land |
+| Bundesrepublik Deutschland | brd |
+| Europäische Union | eu |
 
 #### lage:tz:personalfunktion
 Entspricht dem Punkt 5. Zeichen zur Darstellung von Personen mit besonderen Funktionen der DV102. Mögliche Werte:
