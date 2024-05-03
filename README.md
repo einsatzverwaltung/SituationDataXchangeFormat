@@ -1,5 +1,5 @@
 
-# Lagekarte JSON
+# Lagekarte JSON v0.1
 Lagekarte JSON ist eine Konvention, basierend auf dem GeoJSON Schema ([RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946)) zum Austausch von georeferenzierten Lagekarten im Kontext der Behörden und Organisationen mit Sicherheitsaufgaben. Bei der Definition wurde auf eine größtmögliche Kompatibilität zu vorhandenen Standards geachtet und die Empfehlung der [DV 102](https://www.kritis.bund.de/SharedDocs/Downloads/BBK/DE/Publikationen/Broschueren_Flyer/Empfehlungen_Takt_Zeichen_im_BevSch.pdf?__blob=publicationFile) des Bundesamtes für Bevölkerungs- und Katastrophenschutz beachtet.
 ## Initatoren und Unterstützer
 Initiiert wurde dieses Projekt von [REV Plus](https://www.einsatzverwaltung.de/) und [RescueTablet](https://rescuetablet.de/).
@@ -121,6 +121,9 @@ Attribut| [Point](#point-punkt) | [LineString](#line-string-linie) | [Polygon](#
 | [fill-opacity](#styling-properties)    | - | - | O | O | - |
 | [radius](#circle--kreis)         | - | - | - | M | - |
 | [lage:typ](#lage:typ)        | O | O | O | O | M |
+| [lage:erstellt](#Erstellungszeitpunkt-lage-erstellt)   | M | M | M | M | M |
+| [lage:autor](#Autor-lage-autor)   | M | M | M | M | M |
+| [lage:bearbeitet](#Änderungszeitpunkt-lage-bearbeitet)   | O | O | O | O | O |
 | [lage:name](#lage:name)   | O | O | O | O | O |
 | [lage:beschreibung](#lage:beschreibung)   | O | O | O | O | O |
 | [lage:tz:grundzeichen](#lage:tz:grundzeichen)  | - | - | - | - | C |
@@ -160,6 +163,20 @@ Element| Basiert auf | Beschreibung |
 
 Properties können Mandatory, Optional oder Conditional sein. Mandatory-Properties müssen immer gesetzt sein. Optional-Properties sind optional und können bei Bedarf gesetzt werden.
 Conditional-Properties sind in bestimmten Fällen Mandatory. Es hängt also von anderen Properties ab, ob die Conditional-Property übermittelt werden muss. 
+
+### Allgemeine Attribute
+
+#### Erstellungszeitpunkt (lage:erstellt)
+
+Zeitpunkt der Erstellung des Lagekartenelementes.
+
+#### Änderungszeitpunkt (lage:bearbeitet)
+
+Zeitpunkt der letzten Änderung an diesem Lagekartenelement.
+
+#### Autor (lage:autor)
+
+Der Autor sollte der Name, der Rufname oder die Funktion einer Person sein, die dieses Lagekartenelement erstellt hat.
 
 ### Point of Interest
 Dieses Element ist für die grundsätzliche Darstellung eines Bildes ohne weitere fachliche Definition zu verwenden. Hiermit können Beispielsweise besondere Punkte markiert werden.
