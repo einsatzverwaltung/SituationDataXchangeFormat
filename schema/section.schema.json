@@ -32,13 +32,21 @@
         "items": {
           "$ref": "SectionEntry"
         }
+      },
+      "customProperties": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": {}
       }
     },
     "required": [
       "uid",
       "name",
       "shortcut",
-      "subSections"
+      "subSections",
+      "customProperties"
     ]
   }
 }

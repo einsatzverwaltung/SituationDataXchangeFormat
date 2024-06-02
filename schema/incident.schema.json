@@ -13,10 +13,18 @@
       "uid": {
         "description": "Unique ID of this incident",
         "type": "string"
+      },
+      "customProperties": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": {}
       }
     },
     "required": [
-      "uid"
+      "uid",
+      "customProperties"
     ]
   }
 }

@@ -44,6 +44,13 @@
           "string",
           "null"
         ]
+      },
+      "customProperties": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": {}
       }
     },
     "required": [
@@ -51,7 +58,8 @@
       "fileName",
       "contentType",
       "url",
-      "folder"
+      "folder",
+      "customProperties"
     ]
   }
 }

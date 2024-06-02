@@ -205,12 +205,20 @@
         "string",
         "null"
       ]
+    },
+    "customProperties": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": {}
     }
   },
   "required": [
     "uuid",
     "situation",
     "created",
-    "generator"
+    "generator",
+    "customProperties"
   ]
 }

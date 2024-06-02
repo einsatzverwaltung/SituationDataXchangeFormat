@@ -34,11 +34,19 @@
         },
         "sectionRef": {
           "$ref": "SectionRef"
+        },
+        "customProperties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {}
         }
       },
       "required": [
         "uid",
-        "sectionRef"
+        "sectionRef",
+        "customProperties"
       ]
     }
   },

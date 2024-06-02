@@ -42,6 +42,13 @@
           "string",
           "null"
         ]
+      },
+      "customProperties": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": {}
       }
     },
     "required": [
@@ -49,7 +56,8 @@
       "from",
       "to",
       "text",
-      "editor"
+      "editor",
+      "customProperties"
     ]
   }
 }
