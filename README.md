@@ -19,23 +19,23 @@ Da nicht alle Softwaresysteme im Umfeld der Behörden und Organisationen mit Sic
 ## Aufbau der Austauschdatei
 Für den Austausch der Daten müssen das Quell- sowie das Zielsystem das SDX-Format unterstützen. Der Offline-Austausch erfolgt in Form einer ZIP-Datei, die nach dem folgenden Format aufgebaut ist. Sollte ein Quellsystem, nicht alle Spezifikationen unterstützen, so sind die jeweiligen Dateien nicht Teil der ZIP-Datei. Die metadata.json ist verpflichtend immer Teil der SDXF Datei.
 
-* ZIP-Datei (Endung *.sdxf)
-    * metadata.json
-    * incident.json
-    * unit.json
-    * patient.json
-    * section.json
-    * journal.json
-    * file.json
-    * Files
-    * folderA
-        * 2a8047b7-47bf-4592-aa1d-33c9ea520173
-        * 5f6feefc-f2ff-4d16-a4c5-db7dc4f9d7c4
-        * e8c32402-b2b8-4803-a5f8-cc6cf1716203
-    * folderB
-        * 15edc255-b859-44ea-9166-215fbb660e1c
-        * f9e7f9d0-ad29-4b3b-8ce8-7546faa7ba5d
-        * 1a939c25-6568-4ef2-bef8-475dc43a2290
+ ZIP-Datei (Endung *.sdxf)
+ |-- metadata.json
+ |-- incident.json
+ |-- unit.json
+ |-- patient.json
+ |-- section.json
+ |-- journal.json
+ |-- file.json
+ └-- Files
+      |-- folderA
+      |   |-- 2a8047b7-47bf-4592-aa1d-33c9ea520173
+      |   |-- 5f6feefc-f2ff-4d16-a4c5-db7dc4f9d7c4
+      |   └-- e8c32402-b2b8-4803-a5f8-cc6cf1716203
+      └-- folderB
+          |-- 15edc255-b859-44ea-9166-215fbb660e1c
+          |-- f9e7f9d0-ad29-4b3b-8ce8-7546faa7ba5d
+          └-- 1a939c25-6568-4ef2-bef8-475dc43a2290
 
 # Datenaustausch
 
