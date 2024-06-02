@@ -14,6 +14,7 @@ Da nicht alle Softwaresysteme im Umfeld der Behörden und Organisationen mit Sic
 | Einsatzabschnitte | section | Einsatzabschnitte für die Gliederung der Einsatz- und Führungsstruktur | [section.schema.json](schema/section.schema.json)
 | Einsatztagebuch | journal | Einträge im Einsatztagebuch | [journal.schema.json](schema/journal.schema.json)
 | Binärdateien | file | Dateien wie Luftbilder, Tonaufnahmen, Videoaufnahmen, Dokumente, etc. | [file.schema.json](schema/file.schema.json)
+| Lagekarte | [situationMapJSON](SituationMapJson.md) | Georeferenzierte Lagekarten auf Basis von GeoJSON | [situationMapJSON](SituationMapJson.md)
 
 ## Aufbau der Austauschdatei
 Für den Austausch der Daten müssen das Quell- sowie das Zielsystem das SDX-Format unterstützen. Der Offline-Austausch erfolgt in Form einer ZIP-Datei, die nach dem folgenden Format aufgebaut ist. Sollte ein Quellsystem, nicht alle Spezifikationen unterstützen, so sind die jeweiligen Dateien nicht Teil der ZIP-Datei. Die metadata.json ist verpflichtend immer Teil der SDXF Datei.
