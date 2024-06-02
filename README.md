@@ -37,6 +37,18 @@ Für den Austausch der Daten müssen das Quell- sowie das Zielsystem das SDX-For
               |-- f9e7f9d0-ad29-4b3b-8ce8-7546faa7ba5d
               └-- 1a939c25-6568-4ef2-bef8-475dc43a2290
 
+### Prüfen der Austauschdatei
+Zielsysteme müssen die SDXF Datei vor dem Importieren prüfen. Dabei sollten folgende Prüfungen durchgeführt werden:
+
+ * Hat die Datei die Endung *.sdxf?
+ * Kann die Datei mittels einer Zip-Funktion entpackt werden?
+ * Enthält das ZIP-Archiv mindestens eine metadata.json?
+ * Entspricht die metadata.json dem zugehörigen JSON Schema?
+ * Sind weitere Dateien auf oberster Ebene im ZIP Archiv enthalten?
+ * Entsprechen alle Dateien auf oberster Ebene dem jeweiligen JSON Schema?
+
+Das Zielsystem kann entscheiden, ob es die Datei bei fehlgeschlagener Prüfung trotzdem importiert.
+
 # Datenaustausch
 
 Die Formatdefinition SDXF beschreibt nur den Aufbau der Daten, die für einen Austausch benötigt werden. Für die Übertragung der Daten werden keine Vorgaben gemacht. Alle Anwendungen müssen mindestens die Möglichkeit eines Offline-Datenaustausches, also ein Dateibasierten Ex- und Import der Daten bereitstellen.
