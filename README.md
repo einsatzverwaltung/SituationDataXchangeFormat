@@ -54,6 +54,11 @@ Zielsysteme müssen die SDXF Datei vor dem Importieren prüfen. Dabei sollten fo
 
 Das Zielsystem kann entscheiden, ob es die Datei bei fehlgeschlagener Prüfung trotzdem importiert.
 
+## Verwendung von UUIDs
+
+Innerhalb der Datenspezifikation werden UUIDs zur eindeutigen Identifikation der Datensätze verwendet. Diese UUIDs werden durch das Quellsystem generiert und identifizieren einen Datensatz eindeutig über alle Systeme hinweg. Somit ist gewährleistet, dass durch einen erneuten Import oder auch ein Zurückspielen der Daten vom Zielsystem ins Quellsystem ohne Konflikte erfolgen kann. Die Vorteile der UUIDs liegen in der hohen Kollisonssicherheit und in der Möglichkeit der Offline-Erzeugung.
+Für die Generierung der UUIDs sollte der Standard nach Version 4 verwendet werden.
+
 # Datenaustausch
 
 Die Formatdefinition SDXF beschreibt nur den Aufbau der Daten, die für einen Austausch benötigt werden. Für die Übertragung der Daten werden keine Vorgaben gemacht. Alle Anwendungen müssen mindestens die Möglichkeit eines Offline-Datenaustausches, also ein Dateibasierten Ex- und Import der Daten bereitstellen.
