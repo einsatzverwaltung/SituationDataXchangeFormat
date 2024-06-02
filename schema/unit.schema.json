@@ -1,0 +1,49 @@
+{
+  "$id": "SdxfUnit",
+  "title": "Units for Situation Data Xchange Format (SDXF)",
+  "description": "This Structure contains an array with all units in this situation",
+  "definitions": {
+    "SectionRef": {
+      "$id": "SectionRef",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "uid": {
+          "description": "The UID of the Section for reference",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uid"
+      ]
+    },
+    "UnitEntry": {
+      "$id": "UnitEntry",
+      "title": "Units for Situation Data Xchange Format (SDXF)",
+      "description": "This Structure contains all information about the units",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "uid": {
+          "description": "Unique ID of this unit",
+          "type": "string"
+        },
+        "sectionRef": {
+          "$ref": "SectionRef"
+        }
+      },
+      "required": [
+        "uid",
+        "sectionRef"
+      ]
+    }
+  },
+  "type": "array",
+  "items": {
+    "$ref": "UnitEntry"
+  }
+}

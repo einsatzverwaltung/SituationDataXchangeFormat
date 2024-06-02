@@ -1,0 +1,22 @@
+{
+  "$id": "SdxfIncident",
+  "type": "array",
+  "items": {
+    "$id": "IncidentEntry",
+    "title": "An incident belonging to this situation Situation Data Xchange Format (SDXF)",
+    "description": "This entry contains all information about an incident took place in this situation",
+    "type": [
+      "object",
+      "null"
+    ],
+    "properties": {
+      "uid": {
+        "description": "Unique ID of this incident",
+        "type": "string"
+      }
+    },
+    "required": [
+      "uid"
+    ]
+  }
+}

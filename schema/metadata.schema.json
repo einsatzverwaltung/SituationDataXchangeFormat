@@ -1,0 +1,216 @@
+{
+  "$id": "SdxfMetadata",
+  "title": "Metadata for Situation Data Xchange Format (SDXF)",
+  "description": "The Metadata contains all information about this Datapackage and all referenced files",
+  "definitions": {
+    "GeoLocation": {
+      "$id": "GeoLocation",
+      "description": "Optional GeoPosition of the situation",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Latitude": {
+          "description": "Latitude in WGS84 Format",
+          "type": "number"
+        },
+        "Longitude": {
+          "description": "Longitude in WGS84 Format",
+          "type": "number"
+        },
+        "Altitude": {
+          "description": "Optional Altitude above sea level in Meters",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "Latitude",
+        "Longitude",
+        "Altitude"
+      ]
+    },
+    "HeadquarterStaffMember": {
+      "$id": "HeadquarterStaffMember",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "Role",
+        "Name"
+      ]
+    },
+    "SituationDetails": {
+      "$id": "SituationDetails",
+      "title": "Situation Details",
+      "description": "All Details for this situation",
+      "type": "object",
+      "properties": {
+        "started": {
+          "title": "Started",
+          "description": "Date and Time when situation started",
+          "type": "string",
+          "format": "date-time"
+        },
+        "position": {
+          "$ref": "GeoLocation"
+        },
+        "weather": {
+          "$id": "WeatherDetails",
+          "description": "Information about the current weather situation",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "windDirection": {
+              "description": "Wind-Direction in degrees where the wind comes from",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "temperature": {
+              "description": "Air-Temperature in degree celsisus",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "humidtiy": {
+              "description": "Humidity in Percent",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "windSpeed": {
+              "description": "Windspeed in meters per second",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "rainRate": {
+              "description": "Current rain rate in milimeters per hour",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "airPressure": {
+              "description": "Air pressue in hPa",
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "weatherCondition": {
+              "description": "Current weather Condition description",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "weatherTime": {
+              "description": "Time when weather details was refreshed last time",
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "windDirection",
+            "temperature",
+            "humidtiy",
+            "windSpeed",
+            "rainRate",
+            "airPressure",
+            "weatherCondition",
+            "weatherTime"
+          ]
+        },
+        "description": {
+          "title": "Description",
+          "description": "Description of the situation",
+          "type": "string"
+        },
+        "officerInCharge": {
+          "title": "Officer in Charge",
+          "description": "Officer in Charge",
+          "type": "string"
+        },
+        "headquarterStaff": {
+          "$id": "List`1",
+          "description": "List of members of the headquarter Staff",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "HeadquarterStaffMember"
+          }
+        }
+      },
+      "required": [
+        "started",
+        "position",
+        "weather",
+        "description",
+        "officerInCharge",
+        "headquarterStaff"
+      ]
+    },
+    "WeatherDetails": {
+      "$ref": "WeatherDetails"
+    }
+  },
+  "type": "object",
+  "properties": {
+    "uuid": {
+      "title": "Unique ID",
+      "description": "UUID of this Situation",
+      "type": "string"
+    },
+    "situation": {
+      "$ref": "SituationDetails"
+    },
+    "created": {
+      "title": "Created",
+      "description": "Date and Time when export was created",
+      "type": "string",
+      "format": "date-time"
+    },
+    "generator": {
+      "title": "Generator",
+      "description": "System Name of the file generator",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "uuid",
+    "situation",
+    "created",
+    "generator"
+  ]
+}
