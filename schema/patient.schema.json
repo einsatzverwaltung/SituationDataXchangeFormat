@@ -1,0 +1,134 @@
+{
+  "$id": "SdxfPatient",
+  "definitions": {
+    "GeoLocation": {
+      "$id": "GeoLocation",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Latitude": {
+          "description": "Latitude in WGS84 Format",
+          "type": "number"
+        },
+        "Longitude": {
+          "description": "Longitude in WGS84 Format",
+          "type": "number"
+        },
+        "Altitude": {
+          "description": "Optional Altitude above sea level in Meters",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "Latitude",
+        "Longitude",
+        "Altitude"
+      ]
+    },
+    "Patient": {
+      "$id": "Patient",
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "uid": {
+          "description": "Unique ID of this patient",
+          "type": "string"
+        },
+        "triageCategory": {
+          "type": "string",
+          "enum": [
+            "NotTriaged",
+            "SK1",
+            "SK2",
+            "SK3",
+            "SK4",
+            "Dead"
+          ]
+        },
+        "Barcode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "personalData": {
+          "$id": "PatientPersonalData",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "FirstNames": {
+              "$id": "List`1",
+              "type": [
+                "array",
+                "null"
+              ],
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "LastName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "Birthdate": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "FirstNames",
+            "LastName",
+            "Birthdate"
+          ]
+        },
+        "lastLocation": {
+          "$ref": "GeoLocation"
+        },
+        "registered": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "customProperties": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "uid",
+        "triageCategory",
+        "Barcode",
+        "personalData",
+        "lastLocation",
+        "registered",
+        "customProperties"
+      ]
+    },
+    "PatientPersonalData": {
+      "$ref": "PatientPersonalData"
+    }
+  },
+  "type": "array",
+  "items": {
+    "$ref": "Patient"
+  }
+}

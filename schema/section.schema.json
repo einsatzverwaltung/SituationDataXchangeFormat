@@ -1,0 +1,52 @@
+{
+  "$id": "SdxfSection",
+  "title": "Sections for this situation",
+  "description": "This Structure contains a tree with all sections in this situation",
+  "type": "array",
+  "items": {
+    "$id": "SectionEntry",
+    "type": [
+      "object",
+      "null"
+    ],
+    "properties": {
+      "uid": {
+        "description": "Unique ID of this section",
+        "type": "string"
+      },
+      "name": {
+        "description": "Name of this section",
+        "type": "string"
+      },
+      "shortcut": {
+        "description": "Shortcut for this section",
+        "type": "string"
+      },
+      "subSections": {
+        "$id": "List`1",
+        "description": "Optional Sub-Sections of this Section",
+        "type": [
+          "array",
+          "null"
+        ],
+        "items": {
+          "$ref": "SectionEntry"
+        }
+      },
+      "customProperties": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "required": [
+      "uid",
+      "name",
+      "shortcut",
+      "subSections",
+      "customProperties"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "$id": "SdxfFile",
+  "description": "Files related to this situation",
+  "type": "array",
+  "items": {
+    "$id": "FileEntry",
+    "type": [
+      "object",
+      "null"
+    ],
+    "properties": {
+      "uuid": {
+        "description": "Unique ID of the file",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "fileName": {
+        "description": "Name of the File",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "contentType": {
+        "description": "Content Type of the File",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "url": {
+        "description": "URL to the (local) File",
+        "type": [
+          "string",
+          "null"
+        ],
+        "format": "uri"
+      },
+      "folder": {
+        "description": "Sub-Folder-Path for this file",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "customProperties": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "required": [
+      "uuid",
+      "fileName",
+      "contentType",
+      "url",
+      "folder",
+      "customProperties"
+    ]
+  }
+}

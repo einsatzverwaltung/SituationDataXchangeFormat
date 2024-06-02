@@ -1,0 +1,63 @@
+{
+  "$id": "SdxfJournal",
+  "title": "Journal of Messages",
+  "description": "A list of messages which has been recorded for this situation",
+  "type": "array",
+  "items": {
+    "$id": "JournalEntry",
+    "type": [
+      "object",
+      "null"
+    ],
+    "properties": {
+      "time": {
+        "description": "Time when entry was created / reported",
+        "type": "string",
+        "format": "date-time"
+      },
+      "from": {
+        "description": "Sender of this entry",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "to": {
+        "description": "Receiver of this entry",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "text": {
+        "description": "Content of this entry",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "editor": {
+        "description": "Name of the editor or author of this entry",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "customProperties": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "additionalProperties": {}
+      }
+    },
+    "required": [
+      "time",
+      "from",
+      "to",
+      "text",
+      "editor",
+      "customProperties"
+    ]
+  }
+}
