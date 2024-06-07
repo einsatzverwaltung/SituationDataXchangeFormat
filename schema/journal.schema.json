@@ -10,6 +10,10 @@
       "null"
     ],
     "properties": {
+      "uid": {
+        "description": "Unique ID of this entry",
+        "type": "string"
+      },
       "time": {
         "description": "Time when entry was created / reported",
         "type": "string",
@@ -43,6 +47,18 @@
           "null"
         ]
       },
+      "type": {
+        "description": "The type of the entry",
+        "type": "string",
+        "enum": [
+          "Log",
+          "Request",
+          "Situation",
+          "Info",
+          "Decision",
+          "Mission"
+        ]
+      },
       "customProperties": {
         "type": [
           "object",
@@ -52,11 +68,13 @@
       }
     },
     "required": [
+      "uid",
       "time",
       "from",
       "to",
       "text",
       "editor",
+      "type",
       "customProperties"
     ]
   }

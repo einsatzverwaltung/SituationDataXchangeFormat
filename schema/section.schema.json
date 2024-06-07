@@ -22,6 +22,14 @@
         "description": "Shortcut for this section",
         "type": "string"
       },
+      "type": {
+        "description": "Type of this section",
+        "type": "string",
+        "enum": [
+          "StagingSection",
+          "OperationalSection"
+        ]
+      },
       "subSections": {
         "$id": "List`1",
         "description": "Optional Sub-Sections of this Section",
@@ -45,6 +53,7 @@
       "uid",
       "name",
       "shortcut",
+      "type",
       "subSections",
       "customProperties"
     ]
