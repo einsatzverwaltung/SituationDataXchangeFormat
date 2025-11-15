@@ -256,7 +256,7 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
         "coordinates": [102.0, 0.5]
       },
       "properties": {
-        "situation:type": "tz",
+        "situation:type": "ts",
         "situation:ts:grundzeichen" : "taktische-formation",
         "situation:ts:ordnung" : "gruppe",
         "situation:ts:fachaufgabe" : "brandbekaempfung",
