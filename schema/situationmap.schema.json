@@ -1,0 +1,650 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.org/schema/situation-map-json-v0.3.json",
+  "title": "Situation Map JSON v0.3 (basierend auf GeoJSON / RFC 7946)",
+  "oneOf": [
+    { "$ref": "#/$defs/SituationFeatureCollection" },
+    { "$ref": "#/$defs/SituationFeature" }
+  ],
+  "$defs": {
+    "Bbox": {
+      "type": "array",
+      "minItems": 4,
+      "items": { "type": "number" },
+      "description": "GeoJSON bounding box [west, south, east, north(, …)]"
+    },
+    "Position": {
+      "description": "GeoJSON Position: [longitude, latitude, (optional) altitude]",
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "number" }
+    },
+    "LineStringCoordinates": {
+      "description": "Array von Positionen (min. 2) für LineString und MultiLineString-Segmente",
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/Position" }
+    },
+    "PolygonCoordinates": {
+      "description": "Array von LinearRings (Außenring + optionale Innenringe) für Polygon",
+      "type": "array",
+      "items": {
+        "type": "array",
+        "minItems": 4,
+        "items": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "MultiPointCoordinates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Position" }
+    },
+    "MultiLineStringCoordinates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/LineStringCoordinates" }
+    },
+    "MultiPolygonCoordinates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/PolygonCoordinates" }
+    },
+    "Point": {
+      "title": "GeoJSON Point",
+      "type": "object",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": { "type": "string", "enum": ["Point"] },
+        "coordinates": { "$ref": "#/$defs/Position" },
+        "bbox": { "$ref": "#/$defs/Bbox" }
+      },
+      "additionalProperties": false
+    },
+    "LineString": {
+      "title": "GeoJSON LineString",
+      "type": "object",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": { "type": "string", "enum": ["LineString"] },
+        "coordinates": { "$ref": "#/$defs/LineStringCoordinates" },
+        "bbox": { "$ref": "#/$defs/Bbox" }
+      },
+      "additionalProperties": false
+    },
+    "Polygon": {
+      "title": "GeoJSON Polygon",
+      "type": "object",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": { "type": "string", "enum": ["Polygon"] },
+        "coordinates": { "$ref": "#/$defs/PolygonCoordinates" },
+        "bbox": { "$ref": "#/$defs/Bbox" }
+      },
+      "additionalProperties": false
+    },
+    "MultiPoint": {
+      "title": "GeoJSON MultiPoint",
+      "type": "object",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": { "type": "string", "enum": ["MultiPoint"] },
+        "coordinates": { "$ref": "#/$defs/MultiPointCoordinates" },
+        "bbox": { "$ref": "#/$defs/Bbox" }
+      },
+      "additionalProperties": false
+    },
+    "MultiLineString": {
+      "title": "GeoJSON MultiLineString",
+      "type": "object",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": { "type": "string", "enum": ["MultiLineString"] },
+        "coordinates": { "$ref": "#/$defs/MultiLineStringCoordinates" },
+        "bbox": { "$ref": "#/$defs/Bbox" }
+      },
+      "additionalProperties": false
+    },
+    "MultiPolygon": {
+      "title": "GeoJSON MultiPolygon",
+      "type": "object",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": { "type": "string", "enum": ["MultiPolygon"] },
+        "coordinates": { "$ref": "#/$defs/MultiPolygonCoordinates" },
+        "bbox": { "$ref": "#/$defs/Bbox" }
+      },
+      "additionalProperties": false
+    },
+    "Geometry": {
+      "title": "GeoJSON Geometry",
+      "oneOf": [
+        { "$ref": "#/$defs/Point" },
+        { "$ref": "#/$defs/LineString" },
+        { "$ref": "#/$defs/Polygon" },
+        { "$ref": "#/$defs/MultiPoint" },
+        { "$ref": "#/$defs/MultiLineString" },
+        { "$ref": "#/$defs/MultiPolygon" },
+        { "$ref": "#/$defs/GeometryCollection" }
+      ]
+    },
+    "GeometryCollection": {
+      "title": "GeoJSON GeometryCollection",
+      "type": "object",
+      "required": ["type", "geometries"],
+      "properties": {
+        "type": { "type": "string", "enum": ["GeometryCollection"] },
+        "geometries": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Geometry" }
+        },
+        "bbox": { "$ref": "#/$defs/Bbox" }
+      },
+      "additionalProperties": false
+    },
+    "Feature": {
+      "title": "GeoJSON Feature (Basis)",
+      "type": "object",
+      "required": ["type", "properties", "geometry"],
+      "properties": {
+        "type": { "type": "string", "enum": ["Feature"] },
+        "geometry": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/Geometry" }
+          ]
+        },
+        "properties": {
+          "description": "GeoJSON Feature properties (wird durch SituationFeature spezialisiert)",
+          "type": ["object", "null"]
+        },
+        "id": {
+          "description": "Eindeutige ID des GeoJSON Features",
+          "oneOf": [
+            { "type": "number" },
+            { "type": "string" }
+          ]
+        },
+        "bbox": { "$ref": "#/$defs/Bbox" }
+      }
+    },
+    "FeatureCollection": {
+      "title": "GeoJSON FeatureCollection (Basis)",
+      "type": "object",
+      "required": ["type", "features"],
+      "properties": {
+        "type": { "type": "string", "enum": ["FeatureCollection"] },
+        "features": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Feature" }
+        },
+        "bbox": { "$ref": "#/$defs/Bbox" }
+      }
+    },
+    "StylingProperties": {
+      "description": "Optionale Styling-Eigenschaften (Farben, Deckkraft, Strichstärke)",
+      "type": "object",
+      "properties": {
+        "stroke": {
+          "type": "string",
+          "description": "Strichfarbe (HTML/CSS Color, z.B. #FF0000)"
+        },
+        "stroke-width": {
+          "type": "number",
+          "description": "Strichstärke in Pixeln"
+        },
+        "stroke-opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Deckkraft des Strichs (0.0 - 1.0)"
+        },
+        "fill": {
+          "type": "string",
+          "description": "Füllfarbe (HTML/CSS Color, z.B. #00FF00)"
+        },
+        "fill-opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Deckkraft der Füllung (0.0 - 1.0)"
+        }
+      },
+      "additionalProperties": true
+    },
+    "SituationReferences": {
+      "description": "Referenzen auf Datensätze (z.B. SDXF IDs)",
+      "type": ["object", "null"],
+      "properties": {
+        "unit": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "incident": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "patient": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "section": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        }
+      },
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "null" }
+        ]
+      }
+    },
+    "SituationBaseProperties": {
+      "description": "Allgemeine Eigenschaften für Lagekartenelemente",
+      "type": "object",
+      "properties": {
+        "created": {
+          "description": "Erstellungszeitpunkt",
+          "type": "string",
+          "format": "date-time"
+        },
+        "modified": {
+          "description": "Zeitpunkt der letzten Änderung",
+          "type": "string",
+          "format": "date-time"
+        },
+        "author": {
+          "description": "Autor / Ersteller des Elements",
+          "type": "string"
+        },
+        "title": {
+          "description": "Titel/Name des Objekts (wird in der Karte angezeigt)",
+          "type": "string"
+        },
+        "description": {
+          "description": "Beschreibung (z.B. für Tooltip/Popup)",
+          "type": "string"
+        },
+        "imageUrl": {
+          "description": "URL oder Data-URL zu einem Bild",
+          "type": "string",
+          "format": "uri"
+        },
+        "situation:type": {
+          "description": "Art des Lagekartenelements",
+          "type": "string",
+          "enum": ["poi", "ts", "area", "line", "patient"]
+        },
+        "situation:reference": {
+          "description": "Referenzen auf externe Datensätze",
+          "$ref": "#/$defs/SituationReferences"
+        },
+        "radius": {
+          "description": "Radius in Metern; bei Point + radius soll als Circle gerendert werden",
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": ["created"],
+      "additionalProperties": true
+    },
+    "TsStaerke": {
+      "description": "Stärkeangaben nach FwDV 100",
+      "type": "object",
+      "properties": {
+        "fuehrer_verband": { "type": "string" },
+        "fuehrer_zug": { "type": "string" },
+        "unterfuehrer": { "type": "string" },
+        "mannschaft": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "TsProperties": {
+      "description": "Zusätzliche Properties für taktische Zeichen",
+      "type": "object",
+      "properties": {
+        "situation:type": { "const": "ts" },
+        "situation:ts:grundzeichen": {
+          "description": "Grundzeichen nach DV 102",
+          "type": "string",
+          "enum": [
+            "abrollbehaelter",
+            "anhaenger",
+            "anlass",
+            "befehlsstelle",
+            "fahrrad",
+            "fahrzeug",
+            "flugzeug",
+            "gebaeude",
+            "gefahr",
+            "hubschrauber",
+            "kettenfahrzeug",
+            "kraftfahrzeug-landgebunden",
+            "kraftfahrzeug-gelaendegaengig",
+            "kraftrad",
+            "massnahme",
+            "person",
+            "schienenfahrzeug",
+            "stelle",
+            "ortsfeste-stelle",
+            "taktische-formation",
+            "wasserfahrzeug",
+            "wechsellader"
+          ]
+        },
+        "situation:ts:organisation": {
+          "description": "Organisation nach DV 102",
+          "type": "string",
+          "enum": [
+            "feuerwehr",
+            "thw",
+            "hilfsorganisationen",
+            "fuehrung",
+            "polizei",
+            "sonstige",
+            "bundeswehr"
+          ]
+        },
+        "situation:ts:ordnung": {
+          "description": "Größenordnung/Verband",
+          "type": "string",
+          "enum": [
+            "trupp",
+            "staffel",
+            "gruppe",
+            "zug",
+            "bereitschaft",
+            "abteilung",
+            "grossverband"
+          ]
+        },
+        "situation:ts:verwaltungsstufe": {
+          "description": "Verwaltungsstufen nach SKK 2010",
+          "type": "string",
+          "enum": [
+            "gemeinde",
+            "kreis",
+            "bezirk",
+            "land",
+            "brd",
+            "eu"
+          ]
+        },
+        "situation:ts:personalfunktion": {
+          "description": "Besondere Funktion einer Person",
+          "type": "string",
+          "enum": ["Fuehrungskraft", "Sonderfunktion"]
+        },
+        "situation:ts:fachaufgabe": {
+          "description": "Fachaufgabe nach DV 102",
+          "type": "string",
+          "enum": [
+            "Brandbekaempfung",
+            "RettenAusHoehenUndTiefen",
+            "WasserversorgungUndFoerderung",
+            "TechnischeHilfe",
+            "Heben",
+            "Bergen",
+            "Raeumen",
+            "Entschaerfung",
+            "Sprengen",
+            "Transport",
+            "Beleuchtung",
+            "EinsatzVonLuftfahrzeugen",
+            "EinsatzVonWasserfahrzeugen",
+            "SuchenUndOrtenMitHunden",
+            "Wasserrettung",
+            "Pumpen",
+            "AbwehrVonWassergefahren",
+            "GSG",
+            "Messen",
+            "Dekontamination",
+            "UmweltschadenGewaesser",
+            "Betreuung",
+            "Rettungswesen",
+            "Arzt",
+            "Erkundung",
+            "Deichverteidigung",
+            "FuehrungsgruppeTEL",
+            "Brueckenbau",
+            "RettenAusHoehen",
+            "RettenAusTiefen",
+            "Schlachten",
+            "Warnen",
+            "Angeschlagen",
+            "PersonBetroffen",
+            "PersonGerettet",
+            "PersonTot",
+            "PersonVerletzt",
+            "PersonVermisst",
+            "PersonVerschuettet",
+            "Blockiert",
+            "ElektrischeEnergie",
+            "BrandEntstehung",
+            "BrandFortentwickelt",
+            "BrandVollbrand",
+            "Verpflegung",
+            "Teilblockiert",
+            "Zerstoert",
+            "Teilzerstoert",
+            "Seelsorge",
+            "Sammelstelle",
+            "Unterkunft",
+            "EinsatzVonHubschraubern",
+            "EinsatzVonFlugzeugen",
+            "Veterinaerwesen",
+            "SammelplatzFürBetroffene",
+            "IuK",
+            "Patientenablage",
+            "PatientenablageArzt",
+            "HalteplatzVerletzte",
+            "Sirene",
+            "Trinkwasser",
+            "Brauchwasser",
+            "VersorgungBetriebsstoffe",
+            "Geraete"
+          ]
+        },
+        "situation:ts:formation": {
+          "description": "Taktische Formation",
+          "type": "string"
+        },
+        "situation:ts:text": {
+          "description": "Textdarstellung anstelle einer Fachaufgabe",
+          "type": "string"
+        },
+        "situation:ts:staerke": {
+          "description": "Stärkeangaben",
+          "$ref": "#/$defs/TsStaerke"
+        }
+      },
+      "required": [
+        "situation:type",
+        "situation:ts:grundzeichen"
+      ],
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "description": "Entweder Fachaufgabe gesetzt",
+              "required": ["situation:ts:fachaufgabe"],
+              "not": { "required": ["situation:ts:text"] }
+            },
+            {
+              "description": "oder Text gesetzt",
+              "required": ["situation:ts:text"],
+              "not": { "required": ["situation:ts:fachaufgabe"] }
+            }
+          ]
+        }
+      ],
+      "additionalProperties": true
+    },
+    "PoiProperties": {
+      "description": "Point of Interest",
+      "type": "object",
+      "properties": {
+        "situation:type": { "const": "poi" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": ["situation:type", "imageUrl"],
+      "additionalProperties": true
+    },
+    "LineProperties": {
+      "description": "Linienelement (z.B. Evakuierungsstrecke)",
+      "type": "object",
+      "properties": {
+        "situation:type": { "const": "line" },
+        "situation:line:type": {
+          "description": "Art der Linie",
+          "type": "string",
+          "enum": [
+            "evacuation-route",
+            "defense",
+            "spread"
+          ]
+        }
+      },
+      "required": ["situation:type", "situation:line:type"],
+      "allOf": [
+        { "$ref": "#/$defs/StylingProperties" }
+      ],
+      "additionalProperties": true
+    },
+    "AreaProperties": {
+      "description": "Bereich / Zone",
+      "type": "object",
+      "properties": {
+        "situation:type": { "const": "area" },
+        "situation:area:type": {
+          "description": "Art des Bereichs",
+          "type": "string",
+          "enum": [
+            "generic",
+            "wildfire",
+            "flooded",
+            "drought",
+            "outage",
+            "miscellaneous",
+            "contaminated",
+            "disaster-alert",
+            "operating",
+            "section"
+          ]
+        },
+        "situation:area:danger": {
+          "description": "Gefährdungssituation",
+          "type": "string",
+          "enum": [
+            "acute",
+            "imminent",
+            "former"
+          ]
+        },
+        "title": {
+          "description": "Name oder Bezeichnung des Gebietes",
+          "type": "string"
+        }
+      },
+      "required": ["situation:type", "situation:area:type"],
+      "allOf": [
+        { "$ref": "#/$defs/StylingProperties" }
+      ],
+      "additionalProperties": true
+    },
+    "PatientProperties": {
+      "description": "MANV-Patient",
+      "type": "object",
+      "properties": {
+        "situation:type": { "const": "patient" },
+        "situation:patient:triage": {
+          "description": "Sichtungskategorie",
+          "type": "string",
+          "enum": [
+            "cat-1",
+            "cat-2",
+            "cat-3",
+            "cat-4",
+            "dead"
+          ]
+        },
+        "situation:patient:triage-time": {
+          "description": "Zeitpunkt der letzten Sichtung",
+          "type": "string",
+          "format": "date-time"
+        },
+        "title": {
+          "description": "Bezeichnung des Patienten",
+          "type": "string"
+        },
+        "description": {
+          "description": "Beschreibung / medizinische Kurzinfo",
+          "type": "string"
+        }
+      },
+      "required": ["situation:type", "situation:patient:triage"],
+      "additionalProperties": true
+    },
+    "SituationProperties": {
+      "description": "Properties-Objekt für Situation Map Features",
+      "allOf": [
+        { "$ref": "#/$defs/SituationBaseProperties" },
+        {
+          "oneOf": [
+            { "$ref": "#/$defs/PoiProperties" },
+            { "$ref": "#/$defs/TsProperties" },
+            { "$ref": "#/$defs/LineProperties" },
+            { "$ref": "#/$defs/AreaProperties" },
+            { "$ref": "#/$defs/PatientProperties" }
+          ]
+        }
+      ]
+    },
+    "SituationFeature": {
+      "title": "Situation Map Feature",
+      "description": "GeoJSON Feature mit Situation Map Erweiterungen",
+      "allOf": [
+        { "$ref": "#/$defs/Feature" },
+        {
+          "type": "object",
+          "required": ["id", "properties"],
+          "properties": {
+            "properties": { "$ref": "#/$defs/SituationProperties" }
+          }
+        }
+      ]
+    },
+    "SituationFeatureCollection": {
+      "title": "Situation Map FeatureCollection",
+      "description": "GeoJSON FeatureCollection aus Situation Map Features",
+      "allOf": [
+        { "$ref": "#/$defs/FeatureCollection" },
+        {
+          "type": "object",
+          "properties": {
+            "features": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/SituationFeature" }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,11 @@
 
-# Situation Map JSON v0.2
+# Situation Map JSON v0.3
 Situation Map JSON ist eine Konvention, basierend auf dem GeoJSON Schema ([RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946)) zum Austausch von georeferenzierten Lagekarten im Kontext der Behörden und Organisationen mit Sicherheitsaufgaben. Bei der Definition wurde auf eine größtmögliche Kompatibilität zu vorhandenen Standards geachtet und die Empfehlung der [DV 102](https://www.kritis.bund.de/SharedDocs/Downloads/BBK/DE/Publikationen/Broschueren_Flyer/Empfehlungen_Takt_Zeichen_im_BevSch.pdf?__blob=publicationFile) des Bundesamtes für Bevölkerungs- und Katastrophenschutz beachtet.
+
+Die Schemadefinition ist unter [situationmap.schema.json](schema/situationmap.schema.json) zu finden.
+
+Bei den allgemeinen Erweiterungs- und Stylingproperties wurde für größtmögliche Kompatibilität darauf geachtet, die [Mapbox Simplestyle](https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0) einzuhalten.
+
 ## Initatoren und Unterstützer
 Initiiert wurde dieses Projekt von [REV Plus](https://www.einsatzverwaltung.de/) und [RescueTablet](https://rescuetablet.de/).
 ## Geometrische Elemente des geoJSON Standards (RFC7946)
@@ -12,56 +17,66 @@ Initiiert wurde dieses Projekt von [REV Plus](https://www.einsatzverwaltung.de/)
 | Polygon| Ein Polygon ist eine in sich geschlossene Form und besteht aus mindestens drei Punkten, kann jedoch aus beliebig vielen Punkten bestehen |
 ### Position
 Die Position wird aus einem Array mit mindestens zwei Koordinaten (Longitude und Latitude) beschrieben. Ein optionales drittes Element im Array beschreibt eine Höhe über N.N. in Metern.
-
-    [50.1234, 8.1234, 200]
+```json
+[50.1234, 8.1234, 200]
+```
 ### Point (Punkt)
 Ein Punkt beschreibt ein Element mit nur einer Position.
+```json
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [50.1234, 8.1234, 200]
+  }
+}
+```
 
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [50.1234, 8.1234, 200]
-      }
-    }
 ### Line String (Linie)
 Ein LineString beschreibt eine beliebige Linie, die durch mindestens zwei Positionen repräsentiert wird.
+```json
+{
+  "type": "LineString", 
+  "coordinates": [
+      [30.0, 10.0], [10.0, 30.0], [40.0, 40.0]
+  ]
+}
+```
 
-    {
-	    "type": "LineString", 
-	    "coordinates": [
-	        [30.0, 10.0], [10.0, 30.0], [40.0, 40.0]
-	    ]
-    }
 ### Polygon
 Ein Polygon ist eine geschlossene Linie, die aus mindestens drei Positionen besteht.
+```json
+{
+  "type": "Polygon", 
+  "coordinates": [
+      [[30.0, 10.0], [40.0, 40.0], [20.0, 40.0], [10.0, 20.0], [30.0, 10.0]]
+  ]
+}
+```
 
-    {
-	    "type": "Polygon", 
-	    "coordinates": [
-	        [[30.0, 10.0], [40.0, 40.0], [20.0, 40.0], [10.0, 20.0], [30.0, 10.0]]
-	    ]
-    }
 ## Erweiterung der Standardobjekte
 
 ### Circle / Kreis
 Die Standardelemente bilden leider nicht alle Möglichkeiten ab. Was aktuell noch fehlt, sind Kreise. Als Konvention wird derzeit von den meisten Client-Bibliotheken ein Point mit Radius verwendet.
 Sobald ein Point mit Radius versehen ist, soll dieser als Circle gerendert werden. Der Radius wird in Metern angegeben.
 Beispiel:
-
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [102.0, 0.5]
-      },
-      "properties": {
-        "radius": 100
-      }
-    }
-
+```json
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [102.0, 0.5]
+  },
+  "properties": {
+    "radius": 100
+  }
+}
+```
 ### Styling Properties
 Die Standardelemente werden durch entsprechende Properties für die farbliche Gestaltung erweitert. Dies gilt für fast alle Elemente der geoJSON Spezifikation. Die meisten dieser Properties werden auch durch geoJSON Viewer unterstützt. Somit wäre ein Anzeigen der farbigen Elemente auch in anderen Programmen möglich.
+
+Diese Properties sollen immer durch das System gesetzt sein, um eine maximale Kompatibilität zu erreichen.
+
 |Property| Beschreibung | Beispiel | Point | LineString | Polygon |
 |--|--|--|--|--|--|
 | stroke | HTML Farbe für den Strich | #FF00FF | Nein | Ja | Ja |
@@ -72,43 +87,45 @@ Die Standardelemente werden durch entsprechende Properties für die farbliche Ge
 
 Hier ein Beispiel eines farbigen Rechtecks:
 
-    {
-      "type": "Feature",
-      "properties": {
-        "stroke": "#ff0000",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#555555",
-        "fill-opacity": 0.5
-      },
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              8.908538818359375,
-              50.20986732327653
-            ],
-            [
-              8.97857666015625,
-              50.20986732327653
-            ],
-            [
-              8.97857666015625,
-              50.22744158978946
-            ],
-            [
-              8.908538818359375,
-              50.22744158978946
-            ],
-            [
-              8.908538818359375,
-              50.20986732327653
-            ]
-          ]
+```json
+{
+  "type": "Feature",
+  "properties": {
+    "stroke": "#ff0000",
+    "stroke-width": 2,
+    "stroke-opacity": 1,
+    "fill": "#555555",
+    "fill-opacity": 0.5
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          8.908538818359375,
+          50.20986732327653
+        ],
+        [
+          8.97857666015625,
+          50.20986732327653
+        ],
+        [
+          8.97857666015625,
+          50.22744158978946
+        ],
+        [
+          8.908538818359375,
+          50.22744158978946
+        ],
+        [
+          8.908538818359375,
+          50.20986732327653
         ]
-      }
-    }
+      ]
+    ]
+  }
+}
+```
 
 ## Übersicht über alle Attribute
 
@@ -126,10 +143,11 @@ Attribut| [Point](#point-punkt) | [LineString](#line-string-linie) | [Polygon](#
 | [created](#Erstellungszeitpunkt-created)   | M | M | M | M | M | M |
 | [author](#Autor-lage-author)   | O | O | O | O | O | O |
 | [modified](#Änderungszeitpunkt-lage-bearbeitet)   | O | O | O | O | O | O |
-| [name](#lage:name)   | O | O | O | O | O |
+| [title](#lage:title)   | O | O | O | O | O |
 | [description](#beschreibung-description)   | O | O | O | O | O |
 | [imageUrl](#)   | M | - | - | - | O |
 | [situation:type](#arten-von-lagekartenelementen-situationtype)        | O | O | O | O | M |- |
+| [situation:reference](#arten-von-lagekartenelementen-situationtype)        | O | O | O | O | O | O |
 | Taktische Zeichen |
 | [situation:ts:grundzeichen](#lage:tz:grundzeichen)  | - | - | - | - | C |- |
 | [situation:ts:fachaufgabe](#lage:tz:fachaufgabe)   | - | - | - | - | M |- |
@@ -139,8 +157,10 @@ Attribut| [Point](#point-punkt) | [LineString](#line-string-linie) | [Polygon](#
 | [situation:ts:personalfunktion](#lage:tz:personalfunktion) | - | - | - | - | O |- |
 | [situation:ts:ortsfest](#lage:tz:ortsfest)      | - | - | - | - | O |- |
 | [situation:ts:text](#lage:tz:text)      | - | - | - | - | C |- |
+| Linien |
+| [situation:line:type](#situation:line:type)         | - | O | O | - | - |- |
 | Bereiche / Zonen |
-| [situation:area:art](#situation:area:art)         | - | - | O | O | - |- |
+| [situation:area:type](#situation:area:type)         | - | - | O | O | - |- |
 | [situation:area:danger](#situation:area:danger)   | - | - | O | O | - |- |
 | MANV / Patienten |
 | [situation:patient:triage](#sichtungskategorie-situationpatienttriage)         | - | - | - | - | - | X |
@@ -152,16 +172,18 @@ Attribut| [Point](#point-punkt) | [LineString](#line-string-linie) | [Polygon](#
 Zur Darstellung der Lagekarte ist es notwendig unterschiedliche Elemente darstellen zu können. Diese basieren auf den obigen geometrischen Elementen des geoJSON Standards. Über die Property-Eigenschaft ist es möglich weitere Attribute zu einem geometrischen Element (Geometry) hinzuzufügen.
 Beispielhaft wird dazu folgend die Definition für einen Punkt mit Metadaten (Attribut "prop0" hat den Wert "value0" dargestellt:
 
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [102.0, 0.5]
-      },
-      "properties": {
-        "prop0": "value0"
-      }
-    }
+```json
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [102.0, 0.5]
+  },
+  "properties": {
+    "prop0": "value0"
+  }
+}
+```
 
 ### Arten von Lagekartenelementen (situation:type)
 Folgende Lagekartenelemente sind in dieser Konvention definiert:
@@ -170,6 +192,7 @@ Element| Basiert auf | Beschreibung |
 | Point of Interest | Point | Darstellung eines Bilds / Icon|
 | Tactical Symbol | Point of Interest | Darstellung eines taktischen Zeichens |
 | Area | Polygon | Darstellung eines Gebietes |
+| Line | Polyline | Darstellung einer Linie/Weg/Strecke |
 | Patient | Point | Darstellung eines MANV Patienten
 
 Properties können Mandatory, Optional oder Conditional sein. Mandatory-Properties müssen immer gesetzt sein. Optional-Properties sind optional und können bei Bedarf gesetzt werden.
@@ -181,7 +204,7 @@ Conditional-Properties sind in bestimmten Fällen Mandatory. Es hängt also von 
 
 Jedes Lagekartenelement sollte mit einer eindeutigen ID gekennzeichnet sein, damit den verarbeitenden Systemen ein Aktualisieren oder Löschen von Elementen möglich gemacht werden kann.
 
-#### Name (name)
+#### Name (title)
 
 Diese Eigenschaft gibt dem Objekt einen Namen. Dieser Name bezeichnet das Objekt und sollte immer in der Lagekarte dargestellt werden.
 
@@ -205,32 +228,46 @@ Der Autor sollte der Name, der Rufname oder die Funktion einer Person sein, die 
 
 URL für das anzuzeigende Bild. Das Bild kann als Fallback-Bild verwendet werden, wenn das Zielsystem die Darstellung nicht selbst rendern kann (z.B. das taktische Zeichen) oder wenn das Bild der darzustellende Haupteinhalt ist. Es sind alle gütligen URI Formate möglich. Es wird empfohlen Ressourcen direkt als Daten-URL in das GeoJSON einzubetten oder per lokaler File-URL für mitgelieferte Dateien zu verknüpfen, damit auch Systeme ohne Internetverbindung die Lagekarte darstellen können.
 
+#### Referenzen
+
+Jedes Lagekartenelement kann eine oder mehrere Referenzen zu einem Datensatz aus den strukturierten Daten gemäß SDXF Definition haben. Die Referenz entspricht jeweils der ID des Datensatzes.
+
+```json
+{
+  "unit": "c3fc2d08-140c-42cb-a229-9ca4bf6e77f2",
+  "incident": "c3fc2d08-140c-42cb-a229-9ca4bf6e77f2",
+  "patient": "c3fc2d08-140c-42cb-a229-9ca4bf6e77f2",
+  "section": "c3fc2d08-140c-42cb-a229-9ca4bf6e77f2",  
+}
+```
+
+
 ### Point of Interest
 Dieses Element ist für die grundsätzliche Darstellung eines Bildes oder Symbols ohne weitere fachliche Definition zu verwenden. Hiermit können Beispielsweise besondere Punkte markiert werden.
 
 |Property| Beschreibung | M/C/O | Fester Wert | Beispiel Wert |
 |--|--|--|--|--|
 | situation:type | Typ des Lageelementes | M | poi
-| name | Name des POI, wird auf Lagekarte dargestellt | O | | Toiletten
+| title | Name des POI, wird auf Lagekarte dargestellt | O | | Toiletten
 | description | Beschreibung des POI (Beispielsweise für Popup) | O | | Toiletten mit Handwaschmöglichkeiten
 | imageUrl | URL zum Bild (Kann auch Data-URL sein) | M | | https://cdn-icons-png.flaticon.com/512/185/185547.png
 
 Beispiel:
-
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [102.0, 0.5]
-      },
-      "properties": {
-        "name" : "Toiletten",
-        "description" : "Toiletten mit Handwaschmöglichkeiten",
-        "imageUrl": "https://cdn-icons-png.flaticon.com/512/185/185547.png",
-        "situation:typ": "poi"                
-      }
-    }
-
+```json
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [102.0, 0.5]
+  },
+  "properties": {
+    "title" : "Toiletten",
+    "description" : "Toiletten mit Handwaschmöglichkeiten",
+    "imageUrl": "https://cdn-icons-png.flaticon.com/512/185/185547.png",
+    "situation:typ": "poi"                
+  }
+}
+```
 ### Taktisches Zeichen
 Dieses Element wird für die Darstellung von taktischen Zeichen verwendet. Durch die fachlichen Informationen kann das anzeigende System die taktischen Zeichen selbstständig generieren oder für die Erzeugung von Übersichten oder anderen Informationen verwenden.
 Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist dabei immer anzugeben.
@@ -248,26 +285,26 @@ Das Element basiert auf dem "Point of Interest". Die URL zu der Bilddatei ist da
 | situation:ts:ordnung | Ordnung bzw. Stärke der Einheit | O | Enum |
 | situation:ts:personalfunktion | Besondere Funktion einer Person, kann nur für das Grundzeichen Person angegeben werden | O | Enum |
 | situation:ts:staerke | Stärke der Einheit | O | Objekt |
-
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [102.0, 0.5]
-      },
-      "properties": {
-        "situation:type": "ts",
-        "situation:ts:grundzeichen" : "taktische-formation",
-        "situation:ts:ordnung" : "gruppe",
-        "situation:ts:fachaufgabe" : "brandbekaempfung",
-        "situation:ts:formation" : "kraftfahrzeug-mehrspurig",
-        "situation:ts:organisation" : "feuerwehr",
-        "name" : "MTL 1-46-1",
-        "description" : "LF 20 Maintal",
-        "imageUrl" : "https://rev.fwmtl.de/elp/api/tz-generator?typ=Brandbekaempfung&zeichen=Einheit&organisation=Feuerwehr&einheit=KraftfahrzeugMehrspurig"
-      }
-    }
-
+```json
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [102.0, 0.5]
+  },
+  "properties": {
+    "situation:type": "ts",
+    "situation:ts:grundzeichen" : "taktische-formation",
+    "situation:ts:ordnung" : "gruppe",
+    "situation:ts:fachaufgabe" : "brandbekaempfung",
+    "situation:ts:formation" : "kraftfahrzeug-mehrspurig",
+    "situation:ts:organisation" : "feuerwehr",
+    "title" : "MTL 1-46-1",
+    "description" : "LF 20 Maintal",
+    "imageUrl" : "https://rev.fwmtl.de/elp/api/tz-generator?typ=Brandbekaempfung&zeichen=Einheit&organisation=Feuerwehr&einheit=KraftfahrzeugMehrspurig"
+  }
+}
+```
 #### lage:tz:grundzeichen
 Entspricht dem Punkt 1. Grundzeichen der DV102. Mögliche Werte:
 
@@ -409,19 +446,39 @@ Entspricht dem Punkt 3. Zeichen zur Darstellung von Fachaufgaben der Gefahrenabw
  - Geraete 
 
 #### lage:tz:staerke
-Stärke nach FwDV 100 Führer, Unterführer und Mannschaft.
-
-    {
-      "fuehrer": "1",
-      "unterfuehrer": "3",
-      "mannschaft": "18"
-    }
-
+Stärke nach FwDV 100 Führer (VB), Führer (ZF), Unterführer und Mannschaft.
+```json
+{
+  "fuehrer_verband": "1",
+  "fuehrer_zug": "1",
+  "unterfuehrer": "3",
+  "mannschaft": "18"
+}
+```
 #### lage:ts:text
 
 Alternativ zu einer Fachaufgabe kann auch ein Text in das Zeichen generiert werden. Dies ist z.B. bei der Generierung von Fahrzeugen des THW sinnvoll.
 
+## Linien
 
+Auch die Darstellung von Linien kann bestimmte Bedeutung haben, diese werden entsprechend in Farbe und Form unterschiedlich dargestellt.
+
+Zur Darstellung von Gebieten werden folgende Properties verwendet:
+
+|Property| Beschreibung | M/C/O | Fester Wert |
+|--|--|--|--|
+| [situation:type](#lagekartenelemente) | Typ des Lageelementes | M | line
+| [situation:line:type](#linienart-situationlinetype) | Art der Linie | M | 
+
+### Linienart (situation:line:type)
+
+Für die Darstellung beschreibt die Empfehlung zur Darstellung von taktischen Zeichen folgende Linienarten:
+
+| Linie | Farbe | Beschreibung | Enum-Wert |
+|--|--|--|--|
+| Rettungsweg / Evakuierungsstrecke | Grün #64DC32 | Evakuierungsstrecken sollen grün mit Pfeilen in den Teilstrecken dargestellt werden, um die Richtung der Evakuierung anzuzeigen. Zwischenpunkte sollen als runde Punkte dargestellt werden | evacuation-route
+| Riegelstellung | Blau #3264FA | Verteidungslinie mit 90° Linien linksseitig der Linie (Richtung der Riegelstellung) | defense
+| Brandausbreitung | Rot #FA321E | Brandausbreitungslinie mit 90° Linien linksseitig der Linie (Ausbreitungsrichtung) | spread
 
 
 ## Bereiche
@@ -432,10 +489,10 @@ Zur Darstellung von Gebieten werden folgende Properties verwendet:
 
 |Property| Beschreibung | M/C/O | Fester Wert |
 |--|--|--|--|
-| [situation:type](#lagekartenelemente) | Typ des Lageelementes | M | bereich
+| [situation:type](#lagekartenelemente) | Typ des Lageelementes | M | area
 | [situation:area:type](#flächenart-situationareatype) | Art des Bereichs | M | 
 | [situation:area:danger](#gefährdungssituation-situationareadanger) | Gibt an ob die Gefahr Drohend oder Ehemals ist | O | 
-| [name](#name-name) | Name oder Bezeichnung des Gebietes | O | 
+| [title](#name-name) | Name oder Bezeichnung des Gebietes | O | 
 
 Zusätzlich zu den fachlichen Properties sollten auch alle [Styling Properties](#styling-properties) gesetzt werden um eine größtmögliche Kompatibilität zu gewährleisten.
 
@@ -443,17 +500,18 @@ Zusätzlich zu den fachlichen Properties sollten auch alle [Styling Properties](
 
 Für die Darstellung beschreibt die Empfehlung zur Darstellung von taktischen Zeichen folgende Gebietsarten:
 
-|Gebiet| Hintergrundfarbe | Rahmenfarbe | Enum-Wert
+|Gebiet| Hintergrundfarbe | Rahmenfarbe | Enum-Wert |
 |--|--|--|--|
 | Allgemeine Fläche | Transparent | Schwarz | generic
-| Flächenbrand | Rot | Nicht festgelegt | wildfire
-| Überschwemmtes Gebiet | Blau | Nicht festgelegt | flooded
+| Flächenbrand | Rot #FA321E | Nicht festgelegt | wildfire
+| Überschwemmtes Gebiet | Blau  | Nicht festgelegt | flooded
 | Dürregebiet | Braun | Nicht festgelegt | drought
 | Einschränkung oder Ausfall der Versorgung | Violett | Nicht festgelegt | outage
 | Sonstiges Schadensgebiet | Orange | Nicht festgelegt | miscellaneous
 | Kontaminiertes Gebiet | Gelb | Nicht festgelegt | contaminated
 | KatS Alarm | Transparent | Rot | disaster-alert
 | Einsatzraum | Transparent | Schwarz mit Beschriftung | operating
+| Abschnitt | Transparent | Schwarz mit Beschriftung | section
 
 ### Gefährdungssituation (situation:area:danger)
 
